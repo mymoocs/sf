@@ -1,0 +1,6 @@
+* Logical Foundations
+
+  [[https://softwarefoundations.cis.upenn.edu/lf-current/index.html][LF book]]
+  
+  [[https://softwarefoundations.cis.upenn.edu/lf-current/Preface.html][Preface]]
+  
