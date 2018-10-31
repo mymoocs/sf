@@ -1,2 +1,8 @@
 makefile
 makefile*
+*.vo
+*.glob
+#*
+*#
+.depend
+.coqdeps.d

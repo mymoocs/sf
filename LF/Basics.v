@@ -871,7 +871,13 @@ Proof.
 Theorem plus_id_exercise : forall n m o : nat,
   n = m -> m = o -> n + m = m + o.
 Proof.
-  (* FILL IN HERE *) Admitted.
+ intros n m o.
+ intros Hnm.
+ intros Hmo.
+ rewrite Hnm.
+ rewrite <- Hmo.
+ reflexivity.
+ Qed.  
 (** [] *)
 
 (** The [Admitted] command tells Coq that we want to skip trying
@@ -903,7 +909,12 @@ Theorem mult_S_1 : forall n m : nat,
   m = S n ->
   m * (1 + n) = m * m.
 Proof.
-  (* FILL IN HERE *) Admitted.
+   intros n m.
+   intros Hnext.
+   simpl.
+   rewrite <- Hnext.
+   reflexivity.
+Qed.
 
   (* (N.b. This proof can actually be completed with tactics other than
      [rewrite], but please do use [rewrite] for the sake of the exercise.) *)
@@ -923,8 +934,10 @@ Theorem plus_1_neq_0_firsttry : forall n : nat,
   beq_nat (n + 1) 0 = false.
 Proof.
   intros n.
-  simpl.  (* does nothing! *)
-Abort.
+  destruct n.
+   - simpl. reflexivity.
+   - simpl. reflexivity.  
+Qed.
 
 (** The reason for this is that the definitions of both
     [beq_nat] and [+] begin by performing a [match] on their first
