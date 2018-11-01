@@ -1116,12 +1116,25 @@ Proof.
 Theorem andb_commutative'' :
   forall b c, andb b c = andb c b.
 Proof.
+   
   intros [] [].
   - reflexivity.
   - reflexivity.
   - reflexivity.
   - reflexivity.
 Qed.
+
+(* longer version
+   intros b c.
+   destruct b.
+    - destruct c.
+      + reflexivity.
+      + reflexivity.
+    - destruct c.
+      + reflexivity.
+      + reflexivity.
+Qed.
+*)
 
 (** **** Exercise: 2 stars (andb_true_elim2)  *)
 (** Prove the following claim, marking cases (and subcases) with
@@ -1130,14 +1143,22 @@ Qed.
 Theorem andb_true_elim2 : forall b c : bool,
   andb b c = true -> c = true.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros [] [].
+  - simpl. reflexivity.
+  - simpl. intros. rewrite H. reflexivity.
+  - simpl. intros. reflexivity.
+  - simpl. intros F. rewrite F. reflexivity.
+Qed.
 (** [] *)
 
 (** **** Exercise: 1 star (zero_nbeq_plus_1)  *)
 Theorem zero_nbeq_plus_1 : forall n : nat,
   beq_nat 0 (n + 1) = false.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros. simpl. destruct n.
+    - simpl. reflexivity.
+    - simpl. reflexivity.
+Qed.
 (** [] *)
 
 (* ================================================================= *)
@@ -1238,7 +1259,8 @@ Theorem identity_fn_applied_twice :
   (forall (x : bool), f x = x) ->
   forall (b : bool), f (f b) = b.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros f. intros Fx. intros b. rewrite Fx. rewrite Fx. reflexivity.
+Qed.
 
 (** Now state and prove a theorem [negation_fn_applied_twice] similar
     to the previous one but where the second hypothesis says that the
@@ -1266,8 +1288,12 @@ Theorem andb_eq_orb :
   (andb b c = orb b c) ->
   b = c.
 Proof.
-  (* FILL IN HERE *) Admitted.
-
+  intros [] [].
+  - simpl. intros. reflexivity.
+  - simpl. intros H. rewrite H. reflexivity.
+  - simpl. intros G.  rewrite G. reflexivity.
+  - simpl. intros N. reflexivity.
+Qed.
 (** [] *)
 
 (** **** Exercise: 3 stars (binary)  *)
