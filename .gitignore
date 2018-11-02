@@ -6,3 +6,4 @@ makefile*
 *#
 .depend
 .coqdeps.d
+*.aux

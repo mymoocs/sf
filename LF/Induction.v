@@ -62,15 +62,17 @@ From LF Require Export Basics.
 Theorem plus_n_O_firsttry : forall n:nat,
   n = n + 0.
 
+Proof. intros n. induction n as [| n' IHn'].
+  - simpl. reflexivity.
+  - simpl. rewrite <- IHn'. reflexivity.
+Qed.
+
+
 (** ... can't be done in the same simple way.  Just applying
   [reflexivity] doesn't work, since the [n] in [n + 0] is an arbitrary
   unknown number, so the [match] in the definition of [+] can't be
   simplified.  *)
 
-Proof.
-  intros n.
-  simpl. (* Does nothing! *)
-Abort.
 
 (** And reasoning by cases using [destruct n] doesn't get us much
     further: the branch of the case analysis where we assume [n = 0]
@@ -80,12 +82,10 @@ Abort.
 Theorem plus_n_O_secondtry : forall n:nat,
   n = n + 0.
 Proof.
-  intros n. destruct n as [| n'].
-  - (* n = 0 *)
-    reflexivity. (* so far so good... *)
-  - (* n = S n' *)
-    simpl.       (* ...but here we are stuck again *)
-Abort.
+  intros n. induction n as [| n' IHn'].
+  - (* n = 0 *)  reflexivity. (* so far so good... *)
+  - (* n = S n' *) simpl. rewrite <- IHn'. reflexivity.
+Qed.
 
 (** We could use [destruct n'] to get one step further, but,
     since [n] can be arbitrarily large, if we just go on like this
@@ -158,23 +158,36 @@ Proof.
 Theorem mult_0_r : forall n:nat,
   n * 0 = 0.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros n. induction n as [| n' m'].
+  - simpl. reflexivity.
+  - simpl. rewrite m'. reflexivity. 
+Qed.
 
 Theorem plus_n_Sm : forall n m : nat,
   S (n + m) = n + (S m).
-Proof.
-  (* FILL IN HERE *) Admitted.
+Proof. 
+    intros n m. induction n as [| n' m'].
+    - simpl. reflexivity.
+   - simpl. rewrite m'. reflexivity.
+Qed.
+  
 
 
 Theorem plus_comm : forall n m : nat,
   n + m = m + n.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros n m. induction n as [| n' m'].
+  - simpl. rewrite <- plus_n_O. reflexivity.
+  - simpl. rewrite m'. rewrite plus_n_Sm. reflexivity.
+Qed.
 
 Theorem plus_assoc : forall n m p : nat,
   n + (m + p) = (n + m) + p.
 Proof.
-  (* FILL IN HERE *) Admitted.
+    intros n m p. induction n as [| n' m'].
+    - simpl. reflexivity.
+    - simpl. rewrite <- m'. reflexivity.
+Qed.
 (** [] *)
 
 (** **** Exercise: 2 stars (double_plus)  *)
@@ -190,7 +203,11 @@ Fixpoint double (n:nat) :=
 
 Lemma double_plus : forall n, double n = n + n .
 Proof.
-  (* FILL IN HERE *) Admitted.
+    intros n. induction n as [|n' m'].
+  - simpl. reflexivity.
+  - simpl. rewrite m'. rewrite plus_n_Sm. reflexivity.
+Qed.
+
 (** [] *)
 
 (** **** Exercise: 2 stars, optional (evenb_S)  *)
