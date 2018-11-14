@@ -218,11 +218,26 @@ Qed.
     alternative characterization of [evenb (S n)] that works better
     with induction: *)
 
+Lemma negb_negb_b :
+  forall b : bool,
+  negb (negb b) = b.
+Proof.
+  destruct b.
+  (* CASE: b = true *)
+    reflexivity.
+  (* CASE: b = false *)
+    reflexivity.
+Qed.
+
 Theorem evenb_S : forall n : nat,
   evenb (S n) = negb (evenb n).
 Proof.
-  (* FILL IN HERE *) Admitted.
-(** [] *)
+  intros. induction n as [| n' m']. 
+  - simpl. reflexivity.
+  - rewrite m'. rewrite negb_negb_b. simpl. reflexivity. 
+Qed.  
+
+ (** [] *)
 
 (** **** Exercise: 1 star (destruct_induction)  *)
 (** Briefly explain the difference between the tactics [destruct]
