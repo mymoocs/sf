@@ -107,4 +107,37 @@ Briefly explain the difference between the tactics destruct and induction. *)
 Definition manual_grade_for_destruct_induction : option (prod nat string) := None.
 
 
+
+(* Proofs Within Proofs *)
+
+Theorem mult_0_plus' : forall  n m : nat,
+  (0 + n) * m = n * m.
+Proof.
+  intros n m.
+  assert (H: 0 + n = n). { reflexivity. }
+  rewrite -> H.
+  reflexivity. Qed.
+
+Theorem plus_rearrange_firsttry : forall n m p q : nat,
+  (n + m) + (p + q) = (m + n) + (p + q).
+Proof.
+  intros n m p q.
+  (* We just need to swap (n + m) for (m + n)... seems
+     like plus_comm should do the trick! *)
+  rewrite -> plus_comm.
+  (* Doesn't work...Coq rewrote the wrong plus! *)
+Abort.
+
+Theorem plus_rearrange : forall n m p q : nat,
+  (n + m) + (p + q) = (m + n) + (p + q).
+Proof.
+  intros n m p q.
+  assert (H: n + m = m + n).
+  { rewrite -> plus_comm. reflexivity. }
+  rewrite -> H. reflexivity. Qed.
   
+
+(* Formal vs. Informal Proof *)
+
+(* "Informal proofs are algorithms; formal proofs are code." *)
+
