@@ -1316,9 +1316,12 @@ Definition beq_id (x1 x2 : id) :=
   end.
 
 (** **** Exercise: 1 star (beq_id_refl)  *)
-Theorem beq_id_refl : forall x, true = beq_id x x.
-Proof.
-  (* FILL IN HERE *) Admitted.
+Theorem beq_id_refl : forall x, 
+  true = beq_id x x.
+Proof. intros x.  destruct x. 
+  simpl. rewrite <- beq_nat_refl. reflexivity.
+Qed. 
+  
 (** [] *)
 
 (** Now we define the type of partial maps: *)
@@ -1364,16 +1367,19 @@ Fixpoint find (x : id) (d : partial_map) : natoption :=
 Theorem update_eq :
   forall (d : partial_map) (x : id) (v: nat),
     find x (update d x v) = Some v.
-Proof.
- (* FILL IN HERE *) Admitted.
+Proof. intros. simpl. rewrite <- beq_id_refl. reflexivity.
+Qed.
+  
 (** [] *)
 
 (** **** Exercise: 1 star (update_neq)  *)
 Theorem update_neq :
   forall (d : partial_map) (x y : id) (o: nat),
     beq_id x y = false -> find x (update d y o) = find x d.
-Proof.
- (* FILL IN HERE *) Admitted.
+Proof. intros. simpl. rewrite H. reflexivity.
+Qed.
+
+
 (** [] *)
 End PartialMap.
 
